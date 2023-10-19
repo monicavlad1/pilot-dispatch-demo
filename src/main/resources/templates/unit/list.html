@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{unit.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{unit.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/units/add}" th:text="#{unit.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${units.empty}" th:text="#{unit.list.empty}" />
+            <div th:if="${!units.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{unit.id.label}" scope="col" />
+                            <th th:text="#{unit.name.label}" scope="col" />
+                            <th th:text="#{unit.teamCapacity.label}" scope="col" />
+                            <th th:text="#{unit.status.label}" scope="col" />
+                            <th th:text="#{unit.region.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="unit : ${units}">
+                            <td th:text="${unit.id}" />
+                            <td th:text="${unit.name}" />
+                            <td th:text="${unit.teamCapacity}" />
+                            <td th:text="${unit.status}" />
+                            <td th:text="${unit.region}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/units/edit/{id}(id=${unit.id})}" th:text="#{unit.list.edit}" class="btn btn-sm btn-secondary" />
+                                    <form th:action="@{/units/delete/{id}(id=${unit.id})}"
+                                            th:hx-confirm="#{delete.confirm}" method="post" class="d-inline">
+                                        <button th:text="#{unit.list.delete}" type="submit" class="btn btn-sm btn-secondary" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

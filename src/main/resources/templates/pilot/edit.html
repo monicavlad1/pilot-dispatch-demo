@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{pilot.edit.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{pilot.edit.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/pilots}" th:text="#{pilot.edit.back}" class="btn btn-secondary" />
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('pilot')}" />
+            <form th:action="${requestUri}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='pilot', field='id', disabled=true, type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='pilot', field='name')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='pilot', field='rank', type='radio')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='pilot', field='age', type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='pilot', field='flightsCount', type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='pilot', field='mission', type='multiselect')}" />
+                <input type="submit" th:value="#{pilot.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

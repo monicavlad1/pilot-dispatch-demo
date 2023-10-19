@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{airplane.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{airplane.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/airplanes/add}" th:text="#{airplane.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${airplanes.empty}" th:text="#{airplane.list.empty}" />
+            <div th:if="${!airplanes.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{airplane.id.label}" scope="col" />
+                            <th th:text="#{airplane.name.label}" scope="col" />
+                            <th th:text="#{airplane.seats.label}" scope="col" />
+                            <th th:text="#{airplane.type.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="airplane : ${airplanes}">
+                            <td th:text="${airplane.id}" />
+                            <td th:text="${airplane.name}" />
+                            <td th:text="${airplane.seats}" />
+                            <td th:text="${airplane.type}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/airplanes/edit/{id}(id=${airplane.id})}" th:text="#{airplane.list.edit}" class="btn btn-sm btn-secondary" />
+                                    <form th:action="@{/airplanes/delete/{id}(id=${airplane.id})}"
+                                            th:hx-confirm="#{delete.confirm}" method="post" class="d-inline">
+                                        <button th:text="#{airplane.list.delete}" type="submit" class="btn btn-sm btn-secondary" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
